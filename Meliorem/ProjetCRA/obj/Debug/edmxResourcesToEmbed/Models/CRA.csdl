@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="CRA_BDDModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="MISSION">
+    <Key>
+      <PropertyRef Name="CODE" />
+    </Key>
+    <Property Name="CODE" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="LIBELLE" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="DATE_DEBUT" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="DATE_FIN" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="ETAT" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="UTILISATEUR_MATRICULE" Type="String" MaxLength="40" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="UTILISATEUR" Relationship="Self.FK_MISSION_UTILISATEUR" FromRole="MISSION" ToRole="UTILISATEUR" />
+    <NavigationProperty Name="MISSIONJOUR" Relationship="Self.FK_MISSIONJOUR_MISSION" FromRole="MISSION" ToRole="MISSIONJOUR" />
+  </EntityType>
+  <EntityType Name="MISSIONJOUR">
+    <Key>
+      <PropertyRef Name="IDJOUR" />
+    </Key>
+    <Property Name="IDJOUR" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MISSION_CODE" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="ETAT" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="JOUR" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="MISSION" Relationship="Self.FK_MISSIONJOUR_MISSION" FromRole="MISSIONJOUR" ToRole="MISSION" />
+    <Property Name="TEMPS_ACCORDE" Type="Double" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UTILISATEUR">
+    <Key>
+      <PropertyRef Name="MATRICULE" />
+    </Key>
+    <Property Name="MATRICULE" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="MOTDEPASSE" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="NOM" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="PRENOM" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="ISADMIN" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="MISSION" Relationship="Self.FK_MISSION_UTILISATEUR" FromRole="UTILISATEUR" ToRole="MISSION" />
+  </EntityType>
+  <Association Name="FK_MISSION_UTILISATEUR">
+    <End Role="UTILISATEUR" Type="Self.UTILISATEUR" Multiplicity="0..1" />
+    <End Role="MISSION" Type="Self.MISSION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UTILISATEUR">
+        <PropertyRef Name="MATRICULE" />
+      </Principal>
+      <Dependent Role="MISSION">
+        <PropertyRef Name="UTILISATEUR_MATRICULE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MISSIONJOUR_MISSION">
+    <End Role="MISSION" Type="Self.MISSION" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="MISSIONJOUR" Type="Self.MISSIONJOUR" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MISSION">
+        <PropertyRef Name="CODE" />
+      </Principal>
+      <Dependent Role="MISSIONJOUR">
+        <PropertyRef Name="MISSION_CODE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BD_CRAEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="MISSION" EntityType="Self.MISSION" />
+    <EntitySet Name="MISSIONJOUR" EntityType="Self.MISSIONJOUR" />
+    <EntitySet Name="UTILISATEUR" EntityType="Self.UTILISATEUR" />
+    <AssociationSet Name="FK_MISSION_UTILISATEUR" Association="Self.FK_MISSION_UTILISATEUR">
+      <End Role="UTILISATEUR" EntitySet="UTILISATEUR" />
+      <End Role="MISSION" EntitySet="MISSION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MISSIONJOUR_MISSION" Association="Self.FK_MISSIONJOUR_MISSION">
+      <End Role="MISSION" EntitySet="MISSION" />
+      <End Role="MISSIONJOUR" EntitySet="MISSIONJOUR" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

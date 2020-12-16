@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap-flatly.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body style="padding-top: 0px;">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <div class="container">
+            <div class="navbar-header" style="color: white">
+                @Html.ActionLink("Déconnexion", "Logout", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                Bonjour @User.Identity.Name
+            </div>
+
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Utilisateur/AdminListeEmployes">Liste des employés</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Mission/AdminMissionsEnCours">Missions en cours</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="~/MissionJour/AdminListeMissionJourAttenteValidation">En attente de validation</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="~/Mission/AdminMissionsArchivees">Missions archivées</a>
+                </li>
+            </ul>
+
+        </div>
+
+    </nav>
+    <br />
+    <br />
+
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Meliorem</p>
+        </footer>
+    </div>
+
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+
+</body>
+</html>

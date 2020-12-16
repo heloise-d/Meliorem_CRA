@@ -1,0 +1,965 @@
+﻿@model ProjetCRA.Models.DateView
+@{ ViewBag.Title = "InterfaceUser";
+    Layout = "~/Views/Shared/_Layout.cshtml"; }
+
+@{ int semaineSuivante = (int)ViewBag.numsemaine + 1;
+    int semainePrecedente = (int)ViewBag.numsemaine - 1; }
+
+
+<div class="row align-items-center justify-content-center">
+    <table>
+        <tr>
+            <td><a href=@semainePrecedente class="btn btn-secondary"><span style="font-size:18px">⇽ </span>Semaine précédente</a></td>
+            <td><h3>   Bonne semaine !   </h3></td>
+            <td><a href=@semaineSuivante class="btn btn-secondary">Semaine suivante <span style="font-size:18px">⇾</span></a></td>
+        </tr>
+    </table>
+</div>
+
+
+
+<div class="row align-items-center justify-content-center">
+    <p>Aujourd'hui, nous sommes le <b><span style="text-transform: capitalize;">@DateTime.Now.ToString("dddd, dd MMMM yyyy")</span></b></p>
+</div>
+
+<br />
+
+
+<div class="table-responsive">
+    <table class="table table-bordered">
+        @*     <table>  *@
+        <tr>
+            <td style="padding:0px ; margin:0px; text-align:center" width="157">
+                <table width="157" style="word-wrap: break-word; table-layout: fixed;">
+                    <thead class="">
+                        <tr>
+                            @if (@DateTime.Now.ToString("dddd dd") == @ViewBag.LundiDate.ToString("dddd dd"))
+                            {
+                <th style="background-color:lightseagreen">Lundi @ViewBag.LundiDate.ToString("dd/MM")</th> }
+                            else
+                            {
+                <th style="background-color:lightgrey">Lundi @ViewBag.LundiDate.ToString("dd/MM")</th>}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @foreach (var data in ViewBag.LundiMissions)
+                            {
+                                if (@data.EtatMissionJour == "NonSauvegardé                           ")
+                                {
+            <tr>
+                <td style="background-color:white ; margin:0px ; padding:0px">
+                    <strong>Code :</strong> @data.CodeMission  <br />
+                    <strong>Libellé :</strong> @data.Libelle <br />
+                    <strong>Temps :</strong> @data.Temps
+
+                    <div class="row align-items-center justify-content-center">
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SauvegarderMissionJour/@data.CodeMissionJour">💾</a>
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                    </div>
+                </td>
+            </tr> }
+                            else if (@data.EtatMissionJour == "Sauvegardé                              ")
+                            {
+            <tr>
+                <td style="background-color:#FF8D22 ; margin:0px ; padding:0px">
+                    <strong>Code :</strong> @data.CodeMission  <br />
+                    <strong>Libellé :</strong> @data.Libelle <br />
+                    <strong>Temps :</strong> @data.Temps
+
+                    <div class="row align-items-center justify-content-center">
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                    </div>
+                </td>
+            </tr> }
+
+                            else if (@data.EtatMissionJour == "EnAttenteValidation                     ")
+                            {
+            <tr>
+                <td style="background-color:#FFFF58 ; margin:0px ; padding:0px">
+                    <strong>Code :</strong> @data.CodeMission  <br />
+                    <strong>Libellé :</strong> @data.Libelle <br />
+                    <strong>Temps :</strong> @data.Temps
+
+                    <div class="row align-items-center justify-content-center">
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                    </div>
+                </td>
+            </tr> }
+
+                            else if (data.EtatMissionJour == "Accepté                                 ")
+                            {
+            <tr>
+                <td style="background-color:#77D855 ; margin:0px ; padding:0px">
+                    <strong>Code :</strong> @data.CodeMission  <br />
+                    <strong>Libellé :</strong> @data.Libelle <br />
+                    <strong>Temps :</strong> @data.Temps
+                </td>
+            </tr> }
+
+                            else if (data.EtatMissionJour == "Refusé                                  ")
+                            {
+            <tr>
+                <td style="background-color:#DA1E00 ; margin:0px ; padding:0px">
+                    <strong>Code :</strong> @data.CodeMission  <br />
+                    <strong>Libellé :</strong> @data.Libelle <br />
+                    <strong>Temps :</strong> @data.Temps
+
+                    <div class="row align-items-center justify-content-center">
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SauvegarderMissionJour/@data.CodeMissionJour">💾</a>
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                    </div>
+                </td>
+            </tr>}
+
+                        }
+            </tr>
+            </tbody>
+        </table>
+        </td> @*FIN LUNDI !!!*@
+
+        <td style="margin:0px ; padding:0px; text-align:center" width="157">
+            <table width="157" style="word-wrap: break-word; table-layout: fixed;">
+                <thead>
+                    <tr>
+                        @if (@DateTime.Now.ToString("dddd dd") == @ViewBag.MardiDate.ToString("dddd dd"))
+                        {
+            <th style="background-color:lightseagreen">Mardi @ViewBag.MardiDate.ToString("dd/MM")</th> }
+                        else
+                        {
+            <th style="background-color:lightgrey">Mardi @ViewBag.MardiDate.ToString("dd/MM")</th>}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        @foreach (var data in ViewBag.MardiMissions)
+                        {
+                            if (@data.EtatMissionJour == "NonSauvegardé                           ")
+                            {
+        <tr>
+            <td style="background-color:white ; margin:0px ; padding:0px">
+                <strong>Code :</strong> @data.CodeMission  <br />
+                <strong>Libellé :</strong> @data.Libelle <br />
+                <strong>Temps :</strong> @data.Temps
+
+                <div class="row align-items-center justify-content-center">
+                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SauvegarderMissionJour/@data.CodeMissionJour">💾</a>
+                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                </div>
+            </td>
+        </tr> }
+                        else if (@data.EtatMissionJour == "Sauvegardé                              ")
+                        {
+        <tr>
+            <td style="background-color:#FF8D22 ; margin:0px ; padding:0px">
+                <strong>Code :</strong> @data.CodeMission  <br />
+                <strong>Libellé :</strong> @data.Libelle <br />
+                <strong>Temps :</strong> @data.Temps
+
+                <div class="row align-items-center justify-content-center">
+                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                </div>
+            </td>
+        </tr> }
+
+                        else if (@data.EtatMissionJour == "EnAttenteValidation                     ")
+                        {
+        <tr>
+            <td style="background-color:#FFFF58 ; margin:0px ; padding:0px">
+                <strong>Code :</strong> @data.CodeMission  <br />
+                <strong>Libellé :</strong> @data.Libelle <br />
+                <strong>Temps :</strong> @data.Temps
+
+                <div class="row align-items-center justify-content-center">
+                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                </div>
+            </td>
+        </tr> }
+
+                        else if (data.EtatMissionJour == "Accepté                                 ")
+                        {
+        <tr>
+            <td style="background-color:#77D855 ; margin:0px ; padding:0px">
+                <strong>Code :</strong> @data.CodeMission  <br />
+                <strong>Libellé :</strong> @data.Libelle <br />
+                <strong>Temps :</strong> @data.Temps
+            </td>
+        </tr> }
+
+                        else if (data.EtatMissionJour == "Refusé                                  ")
+                        {
+        <tr>
+            <td style="background-color:#DA1E00 ; margin:0px ; padding:0px">
+                <strong>Code :</strong> @data.CodeMission  <br />
+                <strong>Libellé :</strong> @data.Libelle <br />
+                <strong>Temps :</strong> @data.Temps
+
+                <div class="row align-items-center justify-content-center">
+                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SauvegarderMissionJour/@data.CodeMissionJour">💾</a>
+                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                </div>
+            </td>
+        </tr>}
+
+                    }
+                        </tr>
+                    </tbody>
+                </table>
+            </td> @* FIN MARDI !!! *@
+
+            <td style="margin:0px ; padding:0px; text-align:center" width="157">
+                <table width="157" style="word-wrap: break-word; table-layout: fixed;">
+                    <thead>
+                        <tr>
+                            @if (@DateTime.Now.ToString("dddd dd") == @ViewBag.MercrediDate.ToString("dddd dd"))
+                            {
+                <th style="background-color:lightseagreen">Mercredi @ViewBag.MercrediDate.ToString("dd/MM")</th> }
+                            else
+                            {
+                <th style="background-color:lightgrey">Mercredi @ViewBag.MercrediDate.ToString("dd/MM")</th>}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @foreach (var data in ViewBag.MercrediMissions)
+                            {
+                                if (@data.EtatMissionJour == "NonSauvegardé                           ")
+                                {
+            <tr>
+                <td style="background-color:white ; margin:0px ; padding:0px">
+                    <strong>Code :</strong> @data.CodeMission  <br />
+                    <strong>Libellé :</strong> @data.Libelle <br />
+                    <strong>Temps :</strong> @data.Temps
+
+                    <div class="row align-items-center justify-content-center">
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SauvegarderMissionJour/@data.CodeMissionJour">💾</a>
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                    </div>
+                </td>
+            </tr> }
+                            else if (@data.EtatMissionJour == "Sauvegardé                              ")
+                            {
+            <tr>
+                <td style="background-color:#FF8D22 ; margin:0px ; padding:0px">
+                    <strong>Code :</strong> @data.CodeMission  <br />
+                    <strong>Libellé :</strong> @data.Libelle <br />
+                    <strong>Temps :</strong> @data.Temps
+
+                    <div class="row align-items-center justify-content-center">
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                    </div>
+                </td>
+            </tr> }
+
+                            else if (@data.EtatMissionJour == "EnAttenteValidation                     ")
+                            {
+            <tr>
+                <td style="background-color:#FFFF58 ; margin:0px ; padding:0px">
+                    <strong>Code :</strong> @data.CodeMission  <br />
+                    <strong>Libellé :</strong> @data.Libelle <br />
+                    <strong>Temps :</strong> @data.Temps
+
+                    <div class="row align-items-center justify-content-center">
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                    </div>
+                </td>
+            </tr> }
+
+                            else if (data.EtatMissionJour == "Accepté                                 ")
+                            {
+            <tr>
+                <td style="background-color:#77D855 ; margin:0px ; padding:0px">
+                    <strong>Code :</strong> @data.CodeMission  <br />
+                    <strong>Libellé :</strong> @data.Libelle <br />
+                    <strong>Temps :</strong> @data.Temps
+                </td>
+            </tr> }
+
+                            else if (data.EtatMissionJour == "Refusé                                  ")
+                            {
+            <tr>
+                <td style="background-color:#DA1E00 ; margin:0px ; padding:0px">
+                    <strong>Code :</strong> @data.CodeMission  <br />
+                    <strong>Libellé :</strong> @data.Libelle <br />
+                    <strong>Temps :</strong> @data.Temps
+
+                    <div class="row align-items-center justify-content-center">
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SauvegarderMissionJour/@data.CodeMissionJour">💾</a>
+                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                    </div>
+                </td>
+            </tr>}
+
+                        }
+                            </tr>
+                        </tbody>
+                    </table>
+                </td> @* FIN MERCREDI !!!*@
+
+                <td style="margin:0px ; padding:0px; text-align:center" width="157">
+                    <table width="157" style="word-wrap: break-word; table-layout: fixed;">
+                        <thead>
+                            <tr>
+                                @if (@DateTime.Now.ToString("dddd dd") == @ViewBag.JeudiDate.ToString("dddd dd"))
+                                {
+                    <th style="background-color:lightseagreen">Jeudi @ViewBag.JeudiDate.ToString("dd/MM")</th> }
+                                else
+                                {
+                    <th style="background-color:lightgrey">Jeudi @ViewBag.JeudiDate.ToString("dd/MM")</th>}
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                @foreach (var data in ViewBag.JeudiMissions)
+                                {
+                                    if (@data.EtatMissionJour == "NonSauvegardé                           ")
+                                    {
+                <tr>
+                    <td style="background-color:white ; margin:0px ; padding:0px">
+                        <strong>Code :</strong> @data.CodeMission  <br />
+                        <strong>Libellé :</strong> @data.Libelle <br />
+                        <strong>Temps :</strong> @data.Temps
+
+                        <div class="row align-items-center justify-content-center">
+                            <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                            <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SauvegarderMissionJour/@data.CodeMissionJour">💾</a>
+                            <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                        </div>
+                    </td>
+                </tr> }
+                                else if (@data.EtatMissionJour == "Sauvegardé                              ")
+                                {
+                <tr>
+                    <td style="background-color:#FF8D22 ; margin:0px ; padding:0px">
+                        <strong>Code :</strong> @data.CodeMission  <br />
+                        <strong>Libellé :</strong> @data.Libelle <br />
+                        <strong>Temps :</strong> @data.Temps
+
+                        <div class="row align-items-center justify-content-center">
+                            <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                            <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                        </div>
+                    </td>
+                </tr> }
+
+                                else if (@data.EtatMissionJour == "EnAttenteValidation                     ")
+                                {
+                <tr>
+                    <td style="background-color:#FFFF58 ; margin:0px ; padding:0px">
+                        <strong>Code :</strong> @data.CodeMission  <br />
+                        <strong>Libellé :</strong> @data.Libelle <br />
+                        <strong>Temps :</strong> @data.Temps
+
+                        <div class="row align-items-center justify-content-center">
+                            <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                        </div>
+                    </td>
+                </tr> }
+
+                                else if (data.EtatMissionJour == "Accepté                                 ")
+                                {
+                <tr>
+                    <td style="background-color:#77D855 ; margin:0px ; padding:0px">
+                        <strong>Code :</strong> @data.CodeMission  <br />
+                        <strong>Libellé :</strong> @data.Libelle <br />
+                        <strong>Temps :</strong> @data.Temps
+                    </td>
+                </tr> }
+
+                                else if (data.EtatMissionJour == "Refusé                                  ")
+                                {
+                <tr>
+                    <td style="background-color:#DA1E00 ; margin:0px ; padding:0px">
+                        <strong>Code :</strong> @data.CodeMission  <br />
+                        <strong>Libellé :</strong> @data.Libelle <br />
+                        <strong>Temps :</strong> @data.Temps
+
+                        <div class="row align-items-center justify-content-center">
+                            <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                            <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SauvegarderMissionJour/@data.CodeMissionJour">💾</a>
+                            <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                        </div>
+                    </td>
+                </tr>}
+
+                            }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td> @*FIN JEUDI !!!*@
+
+                    <td style="margin:0px ; padding:0px; text-align:center" width="157">
+                        <table width="157" style="word-wrap: break-word; table-layout: fixed;">
+                            <thead>
+                                <tr>
+                                    @if (@DateTime.Now.ToString("dddd dd") == @ViewBag.VendrediDate.ToString("dddd dd"))
+                                    {
+                        <th style="background-color:lightseagreen">Vendredi @ViewBag.VendrediDate.ToString("dd/MM")</th> }
+                                    else
+                                    {
+                        <th style="background-color:lightgrey">Vendredi @ViewBag.VendrediDate.ToString("dd/MM")</th>}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    @foreach (var data in ViewBag.VendrediMissions)
+                                    {
+                                        if (@data.EtatMissionJour == "NonSauvegardé                           ")
+                                        {
+                    <tr>
+                        <td style="background-color:white ; margin:0px ; padding:0px">
+                            <strong>Code :</strong> @data.CodeMission  <br />
+                            <strong>Libellé :</strong> @data.Libelle <br />
+                            <strong>Temps :</strong> @data.Temps
+
+                            <div class="row align-items-center justify-content-center">
+                                <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                                <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SauvegarderMissionJour/@data.CodeMissionJour">💾</a>
+                                <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                            </div>
+                        </td>
+                    </tr> }
+                                    else if (@data.EtatMissionJour == "Sauvegardé                              ")
+                                    {
+                    <tr>
+                        <td style="background-color:#FF8D22 ; margin:0px ; padding:0px">
+                            <strong>Code :</strong> @data.CodeMission  <br />
+                            <strong>Libellé :</strong> @data.Libelle <br />
+                            <strong>Temps :</strong> @data.Temps
+
+                            <div class="row align-items-center justify-content-center">
+                                <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                                <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                            </div>
+                        </td>
+                    </tr> }
+
+                                    else if (@data.EtatMissionJour == "EnAttenteValidation                     ")
+                                    {
+                    <tr>
+                        <td style="background-color:#FFFF58 ; margin:0px ; padding:0px">
+                            <strong>Code :</strong> @data.CodeMission  <br />
+                            <strong>Libellé :</strong> @data.Libelle <br />
+                            <strong>Temps :</strong> @data.Temps
+
+                            <div class="row align-items-center justify-content-center">
+                                <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                            </div>
+                        </td>
+                    </tr> }
+
+                                    else if (data.EtatMissionJour == "Accepté                                 ")
+                                    {
+                    <tr>
+                        <td style="background-color:#77D855 ; margin:0px ; padding:0px">
+                            <strong>Code :</strong> @data.CodeMission  <br />
+                            <strong>Libellé :</strong> @data.Libelle <br />
+                            <strong>Temps :</strong> @data.Temps
+                        </td>
+                    </tr> }
+
+                                    else if (data.EtatMissionJour == "Refusé                                  ")
+                                    {
+                    <tr>
+                        <td style="background-color:#DA1E00 ; margin:0px ; padding:0px">
+                            <strong>Code :</strong> @data.CodeMission  <br />
+                            <strong>Libellé :</strong> @data.Libelle <br />
+                            <strong>Temps :</strong> @data.Temps
+
+                            <div class="row align-items-center justify-content-center">
+                                <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                                <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SauvegarderMissionJour/@data.CodeMissionJour">💾</a>
+                                <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                            </div>
+                        </td>
+                    </tr>}
+
+                                }
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td> @* FIN VENDREDI !!! *@
+
+                        <td style="margin:0px ; padding:0px; text-align:center" width="157">
+                            <table width="157" style="word-wrap: break-word; table-layout: fixed;">
+                                <thead>
+                                    <tr>
+                                        @if (@DateTime.Now.ToString("dddd dd") == @ViewBag.SamediDate.ToString("dddd dd"))
+                                        {
+                            <th style="background-color:lightseagreen">Samedi @ViewBag.SamediDate.ToString("dd/MM")</th> }
+                                        else
+                                        {
+                            <th style="background-color:lightgrey">Samedi @ViewBag.SamediDate.ToString("dd/MM")</th>}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        @foreach (var data in ViewBag.SamediMissions)
+                                        {
+                                            if (@data.EtatMissionJour == "NonSauvegardé                           ")
+                                            {
+                        <tr>
+                            <td style="background-color:white ; margin:0px ; padding:0px">
+                                <strong>Code :</strong> @data.CodeMission  <br />
+                                <strong>Libellé :</strong> @data.Libelle <br />
+                                <strong>Temps :</strong> @data.Temps
+
+                                <div class="row align-items-center justify-content-center">
+                                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SauvegarderMissionJour/@data.CodeMissionJour">💾</a>
+                                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                                </div>
+                            </td>
+                        </tr> }
+                                        else if (@data.EtatMissionJour == "Sauvegardé                              ")
+                                        {
+                        <tr>
+                            <td style="background-color:#FF8D22 ; margin:0px ; padding:0px">
+                                <strong>Code :</strong> @data.CodeMission  <br />
+                                <strong>Libellé :</strong> @data.Libelle <br />
+                                <strong>Temps :</strong> @data.Temps
+
+                                <div class="row align-items-center justify-content-center">
+                                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                                </div>
+                            </td>
+                        </tr> }
+
+                                        else if (@data.EtatMissionJour == "EnAttenteValidation                     ")
+                                        {
+                        <tr>
+                            <td style="background-color:#FFFF58 ; margin:0px ; padding:0px">
+                                <strong>Code :</strong> @data.CodeMission  <br />
+                                <strong>Libellé :</strong> @data.Libelle <br />
+                                <strong>Temps :</strong> @data.Temps
+
+                                <div class="row align-items-center justify-content-center">
+                                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                                </div>
+                            </td>
+                        </tr> }
+
+                                        else if (data.EtatMissionJour == "Accepté                                 ")
+                                        {
+                        <tr>
+                            <td style="background-color:#77D855 ; margin:0px ; padding:0px">
+                                <strong>Code :</strong> @data.CodeMission  <br />
+                                <strong>Libellé :</strong> @data.Libelle <br />
+                                <strong>Temps :</strong> @data.Temps
+                            </td>
+                        </tr> }
+
+                                        else if (data.EtatMissionJour == "Refusé                                  ")
+                                        {
+                        <tr>
+                            <td style="background-color:#DA1E00 ; margin:0px ; padding:0px">
+                                <strong>Code :</strong> @data.CodeMission  <br />
+                                <strong>Libellé :</strong> @data.Libelle <br />
+                                <strong>Temps :</strong> @data.Temps
+
+                                <div class="row align-items-center justify-content-center">
+                                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SauvegarderMissionJour/@data.CodeMissionJour">💾</a>
+                                    <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                                </div>
+                            </td>
+                        </tr>}
+
+                                    }
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td> @* FIN SAMEDI !!! *@
+
+                            <td style="margin:0px ; padding:0px; text-align:center" width="157">
+                                <table width="157" style="word-wrap: break-word; table-layout: fixed;">
+                                    <thead>
+                                        <tr>
+                                            @if (@DateTime.Now.ToString("dddd dd") == @ViewBag.DimancheDate.ToString("dddd dd"))
+                                            {
+                                <th style="background-color:lightseagreen">Dimanche @ViewBag.DimancheDate.ToString("dd/MM")</th> }
+                                            else
+                                            {
+                                <th style="background-color:lightgrey">Dimanche @ViewBag.DimancheDate.ToString("dd/MM")</th>}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            @foreach (var data in ViewBag.DimancheMissions)
+                                            {
+                                                if (@data.EtatMissionJour == "NonSauvegardé                           ")
+                                                {
+                            <tr>
+                                <td style="background-color:white ; margin:0px ; padding:0px">
+                                    <strong>@data.CodeMission, @data.Libelle</strong> <br />
+                                    @data.Temps
+                                    <div class="row align-items-center justify-content-center">
+                                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SauvegarderMissionJour/@data.CodeMissionJour">💾</a>
+                                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                                    </div>
+                                </td>
+                            </tr> }
+                                            else if (@data.EtatMissionJour == "Sauvegardé                              ")
+                                            {
+                            <tr>
+                                <td style="background-color:#FF8D22 ; margin:0px ; padding:0px">
+                                    <strong>Code :</strong> @data.CodeMission  <br />
+                                    <strong>Libellé :</strong> @data.Libelle <br />
+                                    <strong>Temps :</strong> @data.Temps
+
+                                    <div class="row align-items-center justify-content-center">
+                                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                                    </div>
+                                </td>
+                            </tr> }
+
+                                            else if (@data.EtatMissionJour == "EnAttenteValidation                     ")
+                                            {
+                            <tr>
+                                <td style="background-color:#FFFF58 ; margin:0px ; padding:0px">
+                                    <strong>Code :</strong> @data.CodeMission  <br />
+                                    <strong>Libellé :</strong> @data.Libelle <br />
+                                    <strong>Temps :</strong> @data.Temps
+
+                                    <div class="row align-items-center justify-content-center">
+                                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                                    </div>
+                                </td>
+                            </tr> }
+
+                                            else if (data.EtatMissionJour == "Accepté                                 ")
+                                            {
+                            <tr>
+                                <td style="background-color:#77D855 ; margin:0px ; padding:0px">
+                                    <strong>Code :</strong> @data.CodeMission  <br />
+                                    <strong>Libellé :</strong> @data.Libelle <br />
+                                    <strong>Temps :</strong> @data.Temps
+                                </td>
+                            </tr> }
+
+                                            else if (data.EtatMissionJour == "Refusé                                  ")
+                                            {
+                            <tr>
+                                <td style="background-color:#DA1E00 ; margin:0px ; padding:0px">
+                                    <strong>Code :</strong> @data.CodeMission  <br />
+                                    <strong>Libellé :</strong> @data.Libelle <br />
+                                    <strong>Temps :</strong> @data.Temps
+
+                                    <div class="row align-items-center justify-content-center">
+                                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/ModifierMissionJour/@data.CodeMissionJour">✏️</a>
+                                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SauvegarderMissionJour/@data.CodeMissionJour">💾</a>
+                                        <a style=" margin: 0px; padding: 8px" class="nav-link" href="~/MissionJour/SupprimerMissionJour/@data.CodeMissionJour">❌</a>
+                                    </div>
+                                </td>
+                            </tr>}
+
+                                        }
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </td> @* FIN DIMANCHE !!! *@
+                                </tr>
+                                </table>
+                                @*  </div> *@
+
+
+                                @*----------------------------------------------------------------------------------
+                                    TABLEAU DES BOUTONS AJOUTER ET ENVOYER *@
+
+                                @*row align-items-center justify-content-center*@
+                                <table class="table table-borderless">
+                                    <tr>
+                                        <td align="center" style="padding:0px; margin:0px" width="157">
+                                            <table width="157">
+                                                <tr>
+                                                    @*Bouton ajouter lundi*@
+                                                    <form method="post" action="/MissionJour/AjouterMissionJour">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                                            <div class="form-group">
+                                                                <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.LundiDate />
+                                                                <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Ajouter ➕" class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </tr>
+                                                <tr>
+                                                    @*Bouton envoyer lundi*@
+                                                    <form method="post" action="/MissionJour/EnvoyerJourneeValidation">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                                            <div class="form-group">
+                                                                <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.LundiDate />
+                                                                <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Envoyer 📩" id="missionCode" class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+                                        <td align="center" style="padding:0px; margin:0px" width="157">
+                                            <table width="157">
+                                                <tr>
+                                                    @*Bouton ajouter mardi*@
+                                                    <form method="post" action="/MissionJour/AjouterMissionJour">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                                            <div class="form-group">
+                                                                <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.MardiDate />
+                                                                <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Ajouter ➕" class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </tr>
+                                                <tr>
+                                                    @*Bouton envoyer mardi*@
+                                                    <form method="post" action="/MissionJour/EnvoyerJourneeValidation">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                                            <div class="form-group">
+                                                                <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.MardiDate />
+                                                                <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Envoyer 📩" id="missionCode" class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+                                        <td align="center" style="padding:0px; margin:0px" width="157">
+                                            <table width="157">
+                                                <tr>
+                                                    @*Bouton ajouter mercredi*@
+                                                    <form method="post" action="/MissionJour/AjouterMissionJour">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                                            <div class="form-group">
+                                                                <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.MercrediDate />
+                                                                <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Ajouter ➕" class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </tr>
+                                                <tr>
+                                                    @*Bouton envoyer mercredi*@
+                                                    <form method="post" action="/MissionJour/EnvoyerJourneeValidation">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                                            <div class="form-group">
+                                                                <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.MercrediDate />
+                                                                <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Envoyer 📩" id="missionCode" class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+                                        <td align="center" style="padding:0px; margin:0px" width="157">
+                                            <table width="157">
+                                                <tr>
+                                                    @*Bouton ajouter jeudi*@
+                                                    <form method="post" action="/MissionJour/AjouterMissionJour">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                                            <div class="form-group">
+                                                                <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.JeudiDate />
+                                                                <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Ajouter ➕" class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </tr>
+                                                <tr>
+                                                    @*Bouton envoyer jeudi*@
+                                                    <form method="post" action="/MissionJour/EnvoyerJourneeValidation">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                                            <div class="form-group">
+                                                                <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.JeudiDate />
+                                                                <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Envoyer 📩" id="missionCode" class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+                                        <td align="center" style="padding:0px; margin:0px" width="157">
+                                            <table width="157">
+                                                <tr>
+                                                    @*Bouton ajouter vendredi*@
+                                                    <form method="post" action="/MissionJour/AjouterMissionJour">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                                            <div class="form-group">
+                                                                <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.VendrediDate />
+                                                                <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Ajouter ➕" class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </tr>
+                                                <tr>
+                                                    @*Bouton envoyer vendredi*@
+                                                    <form method="post" action="/MissionJour/EnvoyerJourneeValidation">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                                            <div class="form-group">
+                                                                <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.VendrediDate />
+                                                                <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Envoyer 📩" id="missionCode" class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+                                        <td align="center" style="padding:0px; margin:0px" width="157">
+                                            <table width="157">
+                                                <tr>
+                                                    @*Bouton ajouter samedi*@
+                                                    <form method="post" action="/MissionJour/AjouterMissionJour">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                                            <div class="form-group">
+                                                                <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.SamediDate />
+                                                                <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Ajouter ➕" class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </tr>
+                                                <tr>
+                                                    @*Bouton envoyer samedi*@
+                                                    <form method="post" action="/MissionJour/EnvoyerJourneeValidation">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                                            <div class="form-group">
+                                                                <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.SamediDate />
+                                                                <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Envoyer 📩" id="missionCode" class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+                                        <td align="center" style="padding:0px; margin:0px" width="157">
+                                            <table width="157">
+                                                <tr>
+                                                    @*Bouton ajouter dimanche*@
+                                                    <form method="post" action="/MissionJour/AjouterMissionJour">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                                            <div class="form-group">
+                                                                <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.DimancheDate />
+                                                                <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Ajouter ➕" class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </tr>
+                                                <tr>
+                                                    @*Bouton envoyer dimanche*@
+                                                    <form method="post" action="/MissionJour/EnvoyerJourneeValidation">
+                                                        <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                                            <div class="form-group">
+                                                                <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.DimancheDate />
+                                                                <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <input type="submit" value="Envoyer 📩" id="missionCode" class="btn btn-primary" />
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </tr>
+                                            </table>
+                                        </td>
+
+                                    </tr>
+                                </table>
+
+
+
+
+                            </div>
+
+
+                            @*----- Bouton pré-initiliser la semaine -----*@
+                            <div class="row align-items-center justify-content-center">
+                                <form method="post" action="/MissionJour/PreinitialiserSemaine">
+                                    <div asp-validation-summary="ModelOnly" class="text-danger">
+
+                                        <div class="form-group">
+                                            <input id="DateJour" name="DateJour" type="hidden" value=@ViewBag.LundiDate />
+                                            <input id="Matricule" name="Matricule" type="hidden" value=@User.Identity.Name />
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="submit" value="Pré-initialiser semaine" id="missionCode" class="btn btn-primary" />
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <hr />
+
+
+                            <br />
+
+                            <div style="margin:auto; width:400px">
+                                <h3 class="text-center">Légende des missions</h3>
+                                <p><span style="background-color:white; border:solid 1px black">       </span>  Mission ajoutée dans le semainier et non sauvegardée</p>
+                                <p><span style="background-color:#FF8D22;">       </span>  Mission sauvegardée</p>
+                                <p><span style="background-color:#FFFF58;">       </span>  Mission envoyée à validation à l'administration</p>
+                                <p><span style="background-color:#77D855;">       </span>  Mission validée par un administrateur</p>
+                                <p><span style="background-color:#DA1E00;">       </span>  Mission refusée par un administrateur</p>
+                            </div>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CRA_BDDModelStoreContainer" CdmEntityContainer="BD_CRAEntities">
+    <EntitySetMapping Name="MISSION">
+      <EntityTypeMapping TypeName="CRA_BDDModel.MISSION">
+        <MappingFragment StoreEntitySet="MISSION">
+          <ScalarProperty Name="CODE" ColumnName="CODE" />
+          <ScalarProperty Name="LIBELLE" ColumnName="LIBELLE" />
+          <ScalarProperty Name="DATE_DEBUT" ColumnName="DATE_DEBUT" />
+          <ScalarProperty Name="DATE_FIN" ColumnName="DATE_FIN" />
+          <ScalarProperty Name="ETAT" ColumnName="ETAT" />
+          <ScalarProperty Name="UTILISATEUR_MATRICULE" ColumnName="UTILISATEUR_MATRICULE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MISSIONJOUR">
+      <EntityTypeMapping TypeName="CRA_BDDModel.MISSIONJOUR">
+        <MappingFragment StoreEntitySet="MISSIONJOUR">
+          <ScalarProperty Name="TEMPS_ACCORDE" ColumnName="TEMPS_ACCORDE" />
+          <ScalarProperty Name="IDJOUR" ColumnName="IDJOUR" />
+          <ScalarProperty Name="MISSION_CODE" ColumnName="MISSION_CODE" />
+          <ScalarProperty Name="ETAT" ColumnName="ETAT" />
+          <ScalarProperty Name="JOUR" ColumnName="JOUR" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UTILISATEUR">
+      <EntityTypeMapping TypeName="CRA_BDDModel.UTILISATEUR">
+        <MappingFragment StoreEntitySet="UTILISATEUR">
+          <ScalarProperty Name="MATRICULE" ColumnName="MATRICULE" />
+          <ScalarProperty Name="MOTDEPASSE" ColumnName="MOTDEPASSE" />
+          <ScalarProperty Name="NOM" ColumnName="NOM" />
+          <ScalarProperty Name="PRENOM" ColumnName="PRENOM" />
+          <ScalarProperty Name="ISADMIN" ColumnName="ISADMIN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
