@@ -20,7 +20,7 @@ Vous devez utiliser un ordinateur qui dispose du système d'exploitation **Micro
 ## Installation
 Télécharger le code source avec git : 
 ```text
-git clone https://github.com/heloise-d/ApplicationCRA
+git clone https://github.com/heloise-d/Meliorem_CRA
 ```
 
 ### Installer la Base de données
